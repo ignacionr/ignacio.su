@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add click animation to social links
+    // Add click animation to social links (visual effect only)
     const socialLinks = document.querySelectorAll('.social-link');
     
     socialLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Create ripple effect
+        link.addEventListener('mousedown', function(e) {
+            // Create ripple effect on mousedown (doesn't interfere with click)
             const ripple = document.createElement('span');
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
@@ -71,35 +71,27 @@ document.addEventListener('DOMContentLoaded', function() {
         // Animate avatar
         avatar.style.opacity = '0';
         avatar.style.transform = 'scale(0.5)';
+        avatar.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
         
         setTimeout(() => {
-            avatar.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             avatar.style.opacity = '1';
             avatar.style.transform = 'scale(1)';
         }, 200);
         
         // Animate name
-        setTimeout(() => {
-            name.style.opacity = '0';
-            name.style.transform = 'translateY(20px)';
-            name.style.transition = 'all 0.6s ease';
-            
-            setTimeout(() => {
-                name.style.opacity = '1';
-                name.style.transform = 'translateY(0)';
-            }, 100);
-        }, 400);
+        name.style.opacity = '0';
+        name.style.transform = 'translateY(20px)';
+        name.style.transition = 'all 0.6s ease';
         
-        // Animate social links
+        setTimeout(() => {
+            name.style.opacity = '1';
+            name.style.transform = 'translateY(0)';
+        }, 500);
+        
+        // Animate social links with CSS classes instead of direct style manipulation
         socialLinks.forEach((link, index) => {
-            link.style.opacity = '0';
-            link.style.transform = 'translateY(30px)';
-            
-            setTimeout(() => {
-                link.style.transition = 'all 0.6s ease';
-                link.style.opacity = '1';
-                link.style.transform = 'translateY(0)';
-            }, 600 + (index * 100));
+            link.classList.add('animate-in');
+            link.style.animationDelay = `${0.6 + (index * 0.1)}s`;
         });
     };
     

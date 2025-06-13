@@ -65,12 +65,15 @@
             position: relative;
             margin-bottom: 2rem;
             display: inline-block;
-            padding: 2rem;
+            padding: 2rem 3rem;
             border-radius: 20px;
             background-image: url('https://ghchart.rshah.org/ignacionr');
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
+            min-width: 280px;
+            width: 100%;
+            max-width: 320px;
         }
         
         .avatar-container::before {
@@ -98,7 +101,8 @@
         .avatar-ring {
             position: absolute;
             top: calc(2rem - 8px);
-            left: calc(2rem - 8px);
+            left: 50%;
+            transform: translateX(-50%);
             width: 136px;
             height: 136px;
             border-radius: 50%;
@@ -310,18 +314,19 @@
                 font-size: 0.9rem;
             }
             
+            .avatar-container {
+                padding: 1.5rem 2rem;
+                min-width: 240px;
+                max-width: 280px;
+            }
+            
             .avatar {
                 width: 100px;
                 height: 100px;
             }
             
-            .avatar-container {
-                padding: 1.5rem;
-            }
-            
             .avatar-ring {
                 top: calc(1.5rem - 8px);
-                left: calc(1.5rem - 8px);
                 width: 116px;
                 height: 116px;
             }

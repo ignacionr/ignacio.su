@@ -7,7 +7,285 @@
     <meta name="description" content="Ignacio Rodriguez - Software Developer and Tech Enthusiast">
     <link rel="icon" type="image/x-icon" href="https://gravatar.com/avatar/861237251912d3a0a45f6b0b4506363a">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar-container {
+            position: relative;
+            margin-bottom: 2rem;
+            display: inline-block;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .avatar-ring {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            animation: ringPulse 3s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes ringPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            z-index: 20;
+            pointer-events: auto;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .github {
+            background: linear-gradient(135deg, #24292e 0%, #40464e 100%);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(36, 41, 46, 0.3);
+        }
+
+        .github:hover {
+            box-shadow: 0 8px 25px rgba(36, 41, 46, 0.4);
+        }
+
+        .twitter {
+            background: linear-gradient(135deg, #1da1f2 0%, #0d8bd9 100%);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+        }
+
+        .twitter:hover {
+            box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
+        }
+
+        .phone {
+            background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .phone:hover {
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(113, 128, 150, 0.2);
+            padding-top: 1.5rem;
+        }
+
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 15s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .circle-1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle-2 {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -3s;
+        }
+
+        .circle-3 {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -6s;
+        }
+
+        .circle-4 {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            right: 20%;
+            animation-delay: -9s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.5;
+            }
+            25% {
+                transform: translateY(-30px) rotate(90deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-60px) rotate(180deg);
+                opacity: 0.3;
+            }
+            75% {
+                transform: translateY(-30px) rotate(270deg);
+                opacity: 0.6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            .title {
+                font-size: 1.1rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .social-link {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -40,6 +318,12 @@
             
             <div class="contact-info">
                 <p class="tagline">Let's connect and build something amazing together!</p>
+                <div class="copy-links" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
+                    <p><strong>Links (copy to open):</strong></p>
+                    <p>GitHub: <code>https://github.com/ignacionr</code></p>
+                    <p>Twitter: <code>https://twitter.com/inz</code></p>
+                    <p>Phone: <code>+1 (347) 796-0812</code></p>
+                </div>
             </div>
         </div>
         
@@ -51,6 +335,43 @@
         </div>
     </div>
     
-    <script src="script.js"></script>
+    <script>
+        console.log('Page loaded successfully');
+        
+        // Test if this is a VS Code Simple Browser limitation
+        const isVSCodeBrowser = navigator.userAgent.includes('vscode') || window.location.href.includes('vscode-webview');
+        console.log('Is VS Code browser:', isVSCodeBrowser);
+        console.log('User agent:', navigator.userAgent);
+        
+        // Simple hover effects
+        document.querySelectorAll('.social-link').forEach(link => {
+            console.log('Setting up link:', link.href);
+            
+            link.addEventListener('click', function(e) {
+                console.log('Link clicked:', this.href);
+                
+                // If links don't work, try alternative methods
+                if (isVSCodeBrowser) {
+                    console.log('VS Code browser detected - external links may be restricted');
+                    // Copy link to clipboard as fallback
+                    navigator.clipboard.writeText(this.href).then(() => {
+                        console.log('Link copied to clipboard:', this.href);
+                        alert('Link copied to clipboard: ' + this.href);
+                    }).catch(err => {
+                        console.log('Could not copy link:', err);
+                        prompt('Copy this link:', this.href);
+                    });
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+        
+        // Test basic functionality
+        console.log('Click detection test: Click anywhere on the page...');
+        document.addEventListener('click', function(e) {
+            console.log('Document click detected on:', e.target.tagName);
+        });
+    </script>
 </body>
 </html>

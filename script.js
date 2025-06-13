@@ -16,51 +16,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Add click animation to social links (visual effect only)
+    // Simplified click effect - no complex ripple that might interfere
     const socialLinks = document.querySelectorAll('.social-link');
     
     socialLinks.forEach(link => {
-        link.addEventListener('mousedown', function(e) {
-            // Create ripple effect on mousedown (doesn't interfere with click)
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.classList.add('ripple');
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+        // Simple visual feedback on hover
+        link.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px)';
+        });
+        
+        link.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
         });
     });
     
-    // Add hover effect to card
-    const card = document.querySelector('.card');
-    
-    card.addEventListener('mousemove', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-    });
+    // Temporarily disabled complex card hover effects that might interfere with clicks
+    // const card = document.querySelector('.card');
+    // 
+    // card.addEventListener('mousemove', function(e) {
+    //     const rect = this.getBoundingClientRect();
+    //     const x = e.clientX - rect.left;
+    //     const y = e.clientY - rect.top;
+    //     
+    //     const centerX = rect.width / 2;
+    //     const centerY = rect.height / 2;
+    //     
+    //     const rotateX = (y - centerY) / 10;
+    //     const rotateY = (centerX - x) / 10;
+    //     
+    //     this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+    // });
+    // 
+    // card.addEventListener('mouseleave', function() {
+    //     this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    // });
     
     // Animate elements on load
     const animateOnLoad = () => {
@@ -88,10 +77,12 @@ document.addEventListener('DOMContentLoaded', function() {
             name.style.transform = 'translateY(0)';
         }, 500);
         
-        // Animate social links with CSS classes instead of direct style manipulation
+        // Simplified animation for social links
         socialLinks.forEach((link, index) => {
-            link.classList.add('animate-in');
-            link.style.animationDelay = `${0.6 + (index * 0.1)}s`;
+            setTimeout(() => {
+                link.style.opacity = '1';
+                link.style.transform = 'translateY(0)';
+            }, 600 + (index * 100));
         });
     };
     

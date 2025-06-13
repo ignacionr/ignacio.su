@@ -168,6 +168,16 @@
             box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4);
         }
 
+        .linkedin {
+            background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);
+        }
+
+        .linkedin:hover {
+            box-shadow: 0 8px 25px rgba(0, 119, 181, 0.4);
+        }
+
         .phone {
             background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%);
             color: var(--white);
@@ -310,6 +320,11 @@
                     <span>Twitter</span>
                 </a>
                 
+                <a href="https://linkedin.com/in/ignacio" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn Profile">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                
                 <a href="tel:+13477960812" class="social-link phone" aria-label="Phone Number">
                     <i class="fas fa-phone"></i>
                     <span>+1 (347) 796-0812</span>
@@ -318,12 +333,6 @@
             
             <div class="contact-info">
                 <p class="tagline">Let's connect and build something amazing together!</p>
-                <div class="copy-links" style="margin-top: 1rem; font-size: 0.8rem; color: #666;">
-                    <p><strong>Links (copy to open):</strong></p>
-                    <p>GitHub: <code>https://github.com/ignacionr</code></p>
-                    <p>Twitter: <code>https://twitter.com/inz</code></p>
-                    <p>Phone: <code>+1 (347) 796-0812</code></p>
-                </div>
             </div>
         </div>
         
@@ -338,39 +347,13 @@
     <script>
         console.log('Page loaded successfully');
         
-        // Test if this is a VS Code Simple Browser limitation
-        const isVSCodeBrowser = navigator.userAgent.includes('vscode') || window.location.href.includes('vscode-webview');
-        console.log('Is VS Code browser:', isVSCodeBrowser);
-        console.log('User agent:', navigator.userAgent);
-        
         // Simple hover effects
         document.querySelectorAll('.social-link').forEach(link => {
             console.log('Setting up link:', link.href);
             
             link.addEventListener('click', function(e) {
                 console.log('Link clicked:', this.href);
-                
-                // If links don't work, try alternative methods
-                if (isVSCodeBrowser) {
-                    console.log('VS Code browser detected - external links may be restricted');
-                    // Copy link to clipboard as fallback
-                    navigator.clipboard.writeText(this.href).then(() => {
-                        console.log('Link copied to clipboard:', this.href);
-                        alert('Link copied to clipboard: ' + this.href);
-                    }).catch(err => {
-                        console.log('Could not copy link:', err);
-                        prompt('Copy this link:', this.href);
-                    });
-                    e.preventDefault();
-                    return false;
-                }
             });
-        });
-        
-        // Test basic functionality
-        console.log('Click detection test: Click anywhere on the page...');
-        document.addEventListener('click', function(e) {
-            console.log('Document click detected on:', e.target.tagName);
         });
     </script>
 </body>

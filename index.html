@@ -173,6 +173,82 @@
             transform: translateY(-3px);
         }
 
+        .viditacafe {
+            background: linear-gradient(135deg, #6f4e37 0%, #351f17 100%);
+            color: var(--white) !important;
+            box-shadow: 0 4px 20px rgba(111, 78, 55, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem 1.5rem !important;
+            margin-bottom: 0.5rem;
+        }
+
+        .viditacafe::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.15);
+            transform: rotate(30deg);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .viditacafe:hover::after {
+            left: 130%;
+        }
+
+        .viditacafe:hover {
+            box-shadow: 0 8px 30px rgba(111, 78, 55, 0.55);
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(240, 147, 251, 0.4);
+        }
+
+        .viditacafe-badge {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #f093fb;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            margin-bottom: 0.15rem;
+            display: inline-block;
+        }
+
+        .viditacafe-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        
+        .viditacafe-title i {
+            color: #f093fb;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .viditacafe-desc {
+            font-size: 0.75rem;
+            opacity: 0.85;
+            font-weight: 400;
+            margin-top: 0.15rem;
+            font-style: normal;
+            color: #e2e8f0;
+        }
+
         .github {
             background: linear-gradient(135deg, #24292e 0%, #40464e 100%);
             color: var(--white);
@@ -346,6 +422,15 @@
             <p class="subtitle">Building innovative solutions with passion and precision</p>
             
             <div class="social-links">
+                <a href="https://viditacafe.com" target="_blank" rel="noopener noreferrer" class="social-link viditacafe" aria-label="Vidita Cafe - Coffee Discovery & Journaling">
+                    <span class="viditacafe-badge">Creator & Founder</span>
+                    <span class="viditacafe-title">
+                        <i class="fas fa-mug-hot"></i>
+                        Vidita Café
+                    </span>
+                    <span class="viditacafe-desc">Ecosystem for Coffee Discovery & Journaling</span>
+                </a>
+
                 <a href="https://github.com/ignacionr" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub Profile">
                     <i class="fab fa-github"></i>
                     <span>GitHub</span>

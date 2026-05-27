@@ -20,13 +20,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const socialLinks = document.querySelectorAll('.social-link');
     
     socialLinks.forEach(link => {
-        // Simple visual feedback on hover
+        // Simple visual feedback on hover (excluding the custom viditacafe button which uses CSS animations)
         link.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-3px)';
+            if (!this.classList.contains('viditacafe')) {
+                this.style.transform = 'translateY(-3px)';
+            }
         });
         
         link.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
+            if (!this.classList.contains('viditacafe')) {
+                this.style.transform = 'translateY(0)';
+            }
         });
     });
     

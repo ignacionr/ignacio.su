@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Engineering Blueprint | Ignacio Rodriguez</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/x-icon" href="https://gravatar.com/avatar/861237251912d3a0a45f6b0b4506363a">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #0b0f19;
+            --bg-surface: #111827;
+            --bg-card: #1f2937;
+            --border-color: rgba(255, 255, 255, 0.08);
+            
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.15);
+            --amber: #f59e0b;
+            --amber-glow: rgba(245, 158, 11, 0.15);
+            
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dark: #6b7280;
+            
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.5;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--cyan));
+            border-radius: 2px;
+        }
+
+        .pretitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* METRICS TOP BAR */
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .setup-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .setup-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.08);
+        }
+
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .icon-wrapper.primary {
+            background-color: var(--primary-glow);
+            color: var(--primary);
+        }
+
+        .icon-wrapper.emerald {
+            background-color: var(--emerald-glow);
+            color: var(--emerald);
+        }
+
+        .icon-wrapper.cyan {
+            background-color: var(--cyan-glow);
+            color: var(--cyan);
+        }
+
+        .card-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+        }
+
+        .card-details p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-weight: 700;
+        }
+
+        .tag.primary { background-color: var(--primary-glow); color: #a5b4fc; }
+        .tag.emerald { background-color: var(--emerald-glow); color: #6ee7b7; }
+        .tag.cyan { background-color: var(--cyan-glow); color: #67e8f9; }
+
+        /* CORE GOALS / CARDS SECTION */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .goals-layout {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .goals-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* LEFT SIDE - PHILOSOPHY */
+        .philosophy-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .identity-card {
+            background: linear-gradient(145deg, var(--bg-surface) 0%, rgba(17, 24, 39, 0.7) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .identity-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .identity-header h2 {
+            font-size: 1.35rem;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .identity-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .identity-item i {
+            font-size: 1.1rem;
+            color: var(--cyan);
+            margin-top: 0.2rem;
+        }
+
+        .identity-item h4 {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .identity-item p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* CODE CARD STYLING */
+        .code-card {
+            background-color: #070a13;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #818cf8;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-card::before {
+            content: "C++ Sovereign Philosophy";
+            position: absolute;
+            top: 0.5rem;
+            right: 0.75rem;
+            font-size: 0.65rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .code-card span.comment { color: #4b5563; }
+        .code-card span.keyword { color: #ec4899; }
+        .code-card span.type { color: #06b6d4; }
+        .code-card span.literal { color: #f59e0b; }
+
+        /* RIGHT SIDE - GOALS LIST */
+        .goals-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .goal-box {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .goal-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .goal-box.modern::before { background: var(--cyan); }
+        .goal-box.indep::before { background: var(--primary); }
+        .goal-box.financial::before { background: var(--emerald); }
+
+        .goal-box:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .goal-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .goal-header h3 {
+            font-size: 1.3rem;
+            color: #ffffff;
+        }
+
+        .goal-box p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+
+        .goal-meta {
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border-left: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .goal-box.modern .goal-meta { border-left-color: var(--cyan); }
+        .goal-box.indep .goal-meta { border-left-color: var(--primary); }
+        .goal-box.financial .goal-meta { border-left-color: var(--emerald); }
+
+        .goal-meta strong {
+            color: #ffffff;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .goal-meta span {
+            color: var(--text-muted);
+        }
+
+        /* KPIS TABS SECTION */
+        .kpis-section {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .kpi-title-block {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .kpi-title-block h2 {
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
+        .tab-switcher {
+            display: flex;
+            background-color: var(--bg-base);
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 30px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1.25rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .kpi-view {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .kpi-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .kpi-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .kpi-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .kpi-card-header h4 {
+            font-size: 1.05rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .kpi-icon {
+            font-size: 1.2rem;
+        }
+
+        .kpi-card.tech .kpi-icon { color: var(--cyan); }
+        .kpi-card.ops .kpi-icon { color: var(--amber); }
+
+        .kpi-target {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: rgba(0, 0, 0, 0.25);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border-left: 3px solid;
+        }
+
+        .kpi-card.tech .kpi-target { border-left-color: var(--cyan); }
+        .kpi-card.ops .kpi-target { border-left-color: var(--amber); }
+
+        .kpi-target span.label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.05em;
+        }
+
+        .kpi-target span.value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .kpi-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* BOTTOM BLUEPRINT META */
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- HEADER -->
+        <header>
+            <span class="pretitle">B2B Strategy & Architectural Design</span>
+            <h1>Sovereign Engineering Blueprint</h1>
+            <p class="subtitle">Personal Goals, KPIs & Operational Setup • Raptor Trading Systems (July 2026)</p>
+        </header>
+
+        <!-- SETUP OVERVIEW BAR -->
+        <div class="setup-grid">
+            
+            <div class="setup-card">
+                <div class="icon-wrapper primary">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <div class="card-details">
+                    <h3>Engagement Model</h3>
+                    <p>International B2B Consultancy contracting via custom templates.</p>
+                    <span class="tag primary">Sovereign Partner</span>
+                </div>
+            </div>
+
+            <div class="setup-card">
+                <div class="icon-wrapper emerald">
+                    <i class="fa-solid fa-percent"></i>
+                </div>
+                <div class="card-details">
+                    <h3>Tax Structure</h3>
+                    <p>Funneled via Georgian Individual Entrepreneur status at 1% optimized tax.</p>
+                    <span class="tag emerald">Georgian IE (1%)</span>
+                </div>
+            </div>
+
+            <div class="setup-card">
+                <div class="icon-wrapper cyan">
+                    <i class="fa-solid fa-plane-departure"></i>
+                </div>
+                <div class="card-details">
+                    <h3>Travel & Rotation</h3>
+                    <p>Fits global mobility objectives under the 3-3-3-3 travel model.</p>
+                    <span class="tag cyan">Lifted Non-Compete</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- PHILOSOPHY & GOALS LAYOUT -->
+        <div class="goals-layout">
+            
+            <!-- LEFT COLUMN: IDENTITY -->
+            <div class="philosophy-column">
+                <div class="identity-card">
+                    <div class="identity-header">
+                        <h2>Professional Identity</h2>
+                        <p class="subtitle" style="font-size: 0.85rem;">How I define my presence</p>
+                    </div>
+
+                    <div class="identity-item">
+                        <i class="fa-solid fa-cubes"></i>
+                        <div>
+                            <h4>The Resource-Efficient Architect</h4>
+                            <p>Trim the fat. Deliver high-performance features with near-zero third-party bloat. Modern standard library focus.</p>
+                        </div>
+                    </div>
+
+                    <div class="identity-item">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <div>
+                            <h4>The Low-Latency Stabilizer</h4>
+                            <p>Optimize underlying execution paths. Measurably reduce memory and cycles rather than just patching bugs.</p>
+                        </div>
+                    </div>
+
+                    <div class="identity-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div>
+                            <h4>The Sovereign Professional</h4>
+                            <p>Mutually beneficial B2B exchange. Excellent infrastructure for capital that sustains absolute lifestyle independence.</p>
+                        </div>
+                    </div>
+
+                    <!-- MINIMALIST CODE VISUAL -->
+                    <div class="code-card">
+                        <span class="comment">// Modern, zero-dependency philosophy</span><br>
+                        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> <span class="type">System</span>&gt;<br>
+                        <span class="keyword">struct</span> <span class="type">Architect</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="type">void</span> <span class="keyword">optimize</span>(<span class="type">System</span>&amp; sys) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.remove_bloat();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// Leverage pure standard C++</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sys.latency = <span class="literal">0.0</span>;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        };
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: DETAILED GOALS -->
+            <div class="goals-column">
+                
+                <div class="goal-box modern">
+                    <div class="goal-header">
+                        <h3>System Modernization & Minimalist Design</h3>
+                        <span class="goal-num">GOAL A</span>
+                    </div>
+                    <p>Push for high-performance, low-dependency code using modern C++ standards. Ensure code is maintainable, highly robust, and avoids dependency hell by utilizing the C++ standard library effectively.</p>
+                    <div class="goal-meta">
+                        <strong>Why it matters:</strong>
+                        <span>Ensures trading infrastructure remains clean, fast, and secure.</span>
+                    </div>
+                </div>
+
+                <div class="goal-box indep">
+                    <div class="goal-header">
+                        <h3>Operational Independence & Autonomy</h3>
+                        <span class="goal-num">GOAL B</span>
+                    </div>
+                    <p>Establish a highly autonomous rhythm where deliverables, technical decisions, and documentation are entirely self-explanatory. Minimize back-and-forth management overhead.</p>
+                    <div class="goal-meta">
+                        <strong>Why it matters:</strong>
+                        <span>High autonomy preserves flexible travel and location agility.</span>
+                    </div>
+                </div>
+
+                <div class="goal-box financial">
+                    <div class="goal-header">
+                        <h3>Financial Track Record & Banking Compliance</h3>
+                        <span class="goal-num">GOAL C</span>
+                    </div>
+                    <p>Maintain an flawless, structured paper trail of invoicing and international fund transfers into Georgian banking structures to build long-term wealth, banking safety, and clean business credit.</p>
+                    <div class="goal-meta">
+                        <strong>Why it matters:</strong>
+                        <span>Solidifies banking relationships and financial validity for the future.</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- KEY PERFORMANCE INDICATORS SECTION -->
+        <div class="kpis-section">
+            
+            <div class="kpi-title-block">
+                <h2>Self-Imposed Metrics (Quarterly KPIs)</h2>
+                <div class="tab-switcher">
+                    <button class="tab-btn active" onclick="switchTab('tech')">Technical & Architecture</button>
+                    <button class="tab-btn" onclick="switchTab('ops')">Operational & Lifestyle</button>
+                </div>
+            </div>
+
+            <!-- VIEW: TECHNICAL KPIs -->
+            <div id="tech-kpi-view" class="kpi-view active">
+                <div class="kpi-grid">
+                    
+                    <div class="kpi-card tech">
+                        <div class="kpi-card-header">
+                            <h4>Dependency Count</h4>
+                            <span class="kpi-icon"><i class="fa-solid fa-cube"></i></span>
+                        </div>
+                        <div class="kpi-target">
+                            <span class="label">Target Metric</span>
+                            <span class="value">0 New Third-Party Libs</span>
+                        </div>
+                        <p class="kpi-desc">Reject external libraries unless absolutely critical. Solve infrastructure problems cleanly within modern standard C++.</p>
+                    </div>
+
+                    <div class="kpi-card tech">
+                        <div class="kpi-card-header">
+                            <h4>Resource Optimization</h4>
+                            <span class="kpi-icon"><i class="fa-solid fa-microchip"></i></span>
+                        </div>
+                        <div class="kpi-target">
+                            <span class="label">Target Metric</span>
+                            <span class="value">Net CPU / Memory Reduction</span>
+                        </div>
+                        <p class="kpi-desc">Measurably optimize hot code paths to reduce CPU cycles or memory footprint in sections modified.</p>
+                    </div>
+
+                    <div class="kpi-card tech">
+                        <div class="kpi-card-header">
+                            <h4>Refactoring Debt</h4>
+                            <span class="kpi-icon"><i class="fa-solid fa-trash-can"></i></span>
+                        </div>
+                        <div class="kpi-target">
+                            <span class="label">Target Metric</span>
+                            <span class="value">Simplified Lines &gt; Added Lines</span>
+                        </div>
+                        <p class="kpi-desc">Over a 6-month period, aim to delete or simplify more legacy, bloated lines of code than are added.</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- VIEW: OPERATIONAL KPIs -->
+            <div id="ops-kpi-view" class="kpi-view">
+                <div class="kpi-grid">
+                    
+                    <div class="kpi-card ops">
+                        <div class="kpi-card-header">
+                            <h4>Autonomy Index</h4>
+                            <span class="kpi-icon"><i class="fa-solid fa-hourglass-half"></i></span>
+                        </div>
+                        <div class="kpi-target">
+                            <span class="label">Target Metric</span>
+                            <span class="value">Asynchronous Alignment First</span>
+                        </div>
+                        <p class="kpi-desc">Minimize synchronous alignment calls. Let clean documentation, self-explanatory PRs, and clean code drive alignment.</p>
+                    </div>
+
+                    <div class="kpi-card ops">
+                        <div class="kpi-card-header">
+                            <h4>Location Agility</h4>
+                            <span class="kpi-icon"><i class="fa-solid fa-earth-americas"></i></span>
+                        </div>
+                        <div class="kpi-target">
+                            <span class="label">Target Metric</span>
+                            <span class="value">100% Timezone Output Compliance</span>
+                        </div>
+                        <p class="kpi-desc">Deliver consistent high-quality engineering output regardless of travel location, rotation, or active timezone.</p>
+                    </div>
+
+                    <div class="kpi-card ops">
+                        <div class="kpi-card-header">
+                            <h4>Administrative Flawlessness</h4>
+                            <span class="kpi-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+                        </div>
+                        <div class="kpi-target">
+                            <span class="label">Target Metric</span>
+                            <span class="value">100% Compliant On-Time Invoicing</span>
+                        </div>
+                        <p class="kpi-desc">Produce perfect cross-border invoicing, banking paperwork, and tax records on-time monthly with zero gaps.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            BLUEPRINT // SYSTEM_VERSION_JULY_2026 // RA_TRADING_SYS // GEORGIAN_IE_STRUCTURE_SECURED
+        </footer>
+
+    </div>
+
+    <!-- TAB SWITCHING LOGIC -->
+    <script>
+        function switchTab(tabName) {
+            // Remove active classes
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.kpi-view').forEach(view => view.classList.remove('active'));
+
+            // Find current elements
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.textContent.toLowerCase().includes(tabName));
+            
+            // Set active states
+            if (tabName === 'tech') {
+                document.getElementById('tech-kpi-view').classList.add('active');
+                activeBtn.classList.add('active');
+            } else if (tabName === 'ops') {
+                document.getElementById('ops-kpi-view').classList.add('active');
+                activeBtn.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
